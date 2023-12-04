@@ -1,0 +1,16 @@
+html 
+    head 
+        title Login 
+            link(rel="stylesheet", href="/style.css")
+    body 
+        include ../partials/homeHeader
+        h1#login-header Login
+        div#login-form
+            form(action="/login" method="post")
+            label(for="username") Username
+            input#username(type="text" name="username" required)
+            label(for="password") Password
+            input#password(type="password" name="password" required)
+            button(type="submit") Login
+        script(src='client.js')
+        include ../partials/footer
