@@ -5,8 +5,20 @@ const mongoose = require('mongoose');
 const session = require ('express-session');
 const express = require('express');
 const app = express();
+const path = require('path')
+/*
+    *Importing Routers
+*/
 
-//Start the connection to the database
+const homeRouter = require('./routers/homeRouter');
+const createAccountRouter = require('./routers/createAccountRouter');
+app.set('view engine', 'pug')
+app.set('views', path.join(__dirname, 'views', 'pages')); 
+app.use(express.static(path.join(__dirname, 'public'))); 
+app.use(express.urlencoded({ extended: true }));
+/*
+    *Start the connection to the database
+*/
 mongoose.connect('mongodb://127.0.0.1/Open_Gallery');
 
 /*
@@ -20,68 +32,22 @@ const Open_Gallery = new gallerySession ({
     collection: 'SessionData'
 })
 
+/*
+    *session middleware
+*/
+app.use(session({
+    secret: "your secrete here",
+    resave: false,
+    saveUninitialized: false,
+    store: Open_Gallery
+}));
 
+app.use(homeRouter);
+app.use(createAccountRouter);
 
-
-//Users have a first and last name
-let userSchema = mongoose.Schema({
-	firstName: { type: String, required: true },
-	lastName: { type: String, required: true }
+app.listen(3000, ()=>{
+    console.log('listening on port 3000');
 });
 
-//Compile the previously defined schema into a model
-//The model is what we will use to work with user documents
-//First parameter is a string representing collection name that will be used for this model
-//Second parameter is the schema
-let UserModel = mongoose.model('User', userSchema);
 
-//Start the connection to the database
-mongoose.connect('mongodb://127.0.0.1/someDatabaseName');
 
-//Get the default Mongoose connection (can then be shared across multiple files)
-let db = mongoose.connection;
-
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function () {
-	//Find all UserModel documents
-	//Alternatively: UserModel.find({}, function(err, results){
-	UserModel.find()
-		.then(results => {
-			console.log("Find all:");
-			console.log(results);
-		})
-		.catch(err => {
-			throw err;
-		});
-
-	//Find UserModel documents with firstName == Harry
-	UserModel.find({ firstName: "Tigress" })
-		.then(results => {
-			console.log("Find users named Tigress:");
-			console.log(results);
-		})
-		.catch(err => {
-			throw err;
-		});
-
-	UserModel.findOne()
-		.then(result => {
-			console.log("Find one UserModel document:");
-			console.log(result);
-
-			//Result in this case is a UserModel document
-			//So we can access/change any known properties
-			// and save the changes with the save method
-			result.lastName = "Young";
-			result.save()
-				.then(() => {
-					console.log("User saved.");
-				})
-				.catch(err => {
-					throw err;
-				});
-		})
-		.catch(err => {
-			throw err;
-		});
-});
