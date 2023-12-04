@@ -7,14 +7,14 @@ html
         h1#aaccount-header Create New Account
         div#caccount-form
             form#accountCreationForm(action="/createAccount" method="post")
-            label(for="firstName") First Name
-            input#firstName(type="text" name="firstName" required)
-            label(for="lastName") Last Name
-            input#lastName(type="text" name="lastName" required)
-            label(for="username") Username
-            input#username(type="text" name="username" required)
-            label(for="password") Password
-            input#password(type="password" name="password" required)
-            button(type="submit") Create Account
+                label(for="firstName") First Name
+                input#firstName(type="text" name="firstName" required)
+                label(for="lastName") Last Name
+                input#lastName(type="text" name="lastName" required)
+                label(for="username") Username
+                input#username(type="text" name="username" required)
+                label(for="password") Password
+                input#password(type="password" name="password" required)
+                button(type="submit") Create Account
         script(src='client.js')
         include ../partials/footer
