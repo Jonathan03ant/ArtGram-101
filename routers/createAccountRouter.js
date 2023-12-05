@@ -28,8 +28,12 @@ router.post('/createaccount', (req, res) => {
     newUser.save() 
         .then(() => res.send("User Created!"))
         .catch( err => {
-            console.error(err);
-            res.status(500).send("Error creating user")
+            if (err.code === 11000) { 
+                res.status(400).send("Username is already taken");
+            } else {
+                console.error(err);
+                res.status(500).send("Error creating user")
+            }
         });
 });
 
