@@ -12,6 +12,11 @@ const path = require('path')
 
 const homeRouter = require('./routers/homeRouter');
 const createAccountRouter = require('./routers/createAccountRouter');
+const loginRouter = require('./routers/loginRouter')
+
+/*
+    *Setting important express things
+*/
 app.set('view engine', 'pug')
 app.set('views', path.join(__dirname, 'views', 'pages')); 
 app.use(express.static(path.join(__dirname, 'public'))); 
@@ -44,6 +49,7 @@ app.use(session({
 
 app.use(homeRouter);
 app.use(createAccountRouter);
+app.use(loginRouter);
 
 app.listen(3000, ()=>{
     console.log('listening on port 3000');
