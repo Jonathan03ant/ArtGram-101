@@ -2,13 +2,18 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 /*
     *User Schema
+    *Patron User---> 'patron'
+    *Artist User---> 'artist'
 */
 const userSchema = new Schema({
     username: {type: String, required: true, unique: true},
     password: {type: String, required: true},
-    accountType: {type: String, required: true, enum: ['patron', 'artist']},
-    firtName: String,
-    lastName: String
+    accountType: {
+        type: String, 
+        required: true, 
+        enum: ['patron', 'artist']},
+    firstName: String,
+    lastName: String,
 });
 
 /*
