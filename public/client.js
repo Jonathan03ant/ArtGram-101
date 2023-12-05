@@ -7,12 +7,12 @@ create.addEventListener('submit', function(event){
     event.preventDefault();
 
     const firstName = document.querySelector("#firstName").value;
-    const lastName = document.querySelector("#lastName").value;
+    const lastName = document.querySelector("#lastName").value.trim();
     const username = document.querySelector("#username").value;
     const password = document.querySelector("#password").value;
 
     const data = `firstName=${encodeURIComponent(firstName)}&lastName=${encodeURIComponent(lastName)}
-                    &username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`;
+                  &username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`;
 
     const xhttp = new XMLHttpRequest();
     xhttp.open("POST", "/createaccount");
