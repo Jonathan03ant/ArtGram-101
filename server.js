@@ -13,6 +13,7 @@ const path = require('path')
 const homeRouter = require('./routers/homeRouter');
 const createAccountRouter = require('./routers/createAccountRouter');
 const loginRouter = require('./routers/loginRouter')
+const artistsHomeRouter = require('./routers/artistsHomeRouter');
 
 /*
     *Setting important express things
@@ -41,15 +42,17 @@ const Open_Gallery = new gallerySession ({
     *session middleware
 */
 app.use(session({
-    secret: "your secrete here",
+    secret: "COMP@$)^TermPJ2406",
     resave: false,
     saveUninitialized: false,
-    store: Open_Gallery
+    store: Open_Gallery,
+    cookie: { maxAge: 60 * 60 * 1000}
 }));
 
 app.use(homeRouter);
 app.use(createAccountRouter);
 app.use(loginRouter);
+app.use(artistsHomeRouter);
 
 app.listen(3000, ()=>{
     console.log('listening on port 3000');

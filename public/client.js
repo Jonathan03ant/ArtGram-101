@@ -49,9 +49,9 @@ document.querySelector("form").addEventListener("submit", function(event) {
                 console.log(response.message);
                 if (response.message === 'success') {
                     if (response.accountType === 'patron') {
-                        window.location.href = '/account/patron/' + response.username;
+                        window.location.href = '/patron/home';
                     } else if (response.accountType === 'artist') {
-                        window.location.href = '/account/artist/' + response.username;
+                        window.location.href = '/artist/home';
                     }
                 }
             } else {
