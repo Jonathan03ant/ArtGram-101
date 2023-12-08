@@ -1,0 +1,13 @@
+html
+    head
+        title Home Page
+        link(rel="stylesheet", href="/style.css")
+    body
+        include ../partials/mainHomeHeader
+        div#top-row-buttons 
+            form(id="change-account", method="post", action="/change-account")
+            button(type="submit") Switch Account
+            button(onclick="location.href='/add-workshop'") Add Workshop
+            button(onclick="location.href='/manage-artworks'") Manage Artworks
+        script(src='client.js')
+        include ../partials/footer

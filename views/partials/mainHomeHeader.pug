@@ -1,0 +1,13 @@
+div#header
+    img#logo(src="/logo.png", alt="logo")
+    | 
+    if accountType === 'patron'
+        a(href="/patron/home") Home
+    else if accountType === 'artist'
+        a(href="/artist/home") Home
+    | 
+    a#notification-link(href="/notification") Notification
+    |
+    a(href="/logout") Logout
+    | 
+    link(rel='icon', href='/favicon.ico')
