@@ -14,6 +14,7 @@ const userSchema = new Schema({
         enum: ['patron', 'artist']},
     firstName: String,
     lastName: String,
+    following: [{type: mongoose.Schema.Types.ObjectId, ref: 'Artist'}],
 });
 
 /*
