@@ -9,7 +9,7 @@ const Schema = mongoose.Schema;
 */
 const artworkSchema = new Schema ({
     title: {type: String, required: true},
-    artist: {type: mongoose.Schema.Types.ObjectId, ref: 'Artist', required: true},
+    artist: {type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true},
     artistName: {type: String, required: true},
     year: {type: String, required: true},
     category: {type: String, required: true},
