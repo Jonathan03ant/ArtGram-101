@@ -6,6 +6,14 @@ const session = require ('express-session');
 const express = require('express');
 const app = express();
 const path = require('path')
+
+/*
+    *Models
+*/
+require('./models/artistsModel');
+require('./models/artworkModel');
+require('./models/usersModel');
+
 /*
     *Importing Routers
 */
@@ -14,14 +22,20 @@ const homeRouter = require('./routers/homeRouter');
 const createAccountRouter = require('./routers/createAccountRouter');
 const loginRouter = require('./routers/loginRouter')
 const artistsHomeRouter = require('./routers/artistsHomeRouter');
+const patronsHomeRouter = require('./routers/patronsHomeRouter')
+const artworkRouter = require('./routers/artworkRouter');
+const artworkPublicPage = require('./routers/artworkPageRouter')
+
 
 /*
-    *Setting important express things
+    *Setting important express setups
 */
+
 app.set('view engine', 'pug')
 app.set('views', path.join(__dirname, 'views', 'pages')); 
 app.use(express.static(path.join(__dirname, 'public'))); 
 app.use(express.urlencoded({ extended: true }));
+
 /*
     *Start the connection to the database
 */
@@ -52,7 +66,15 @@ app.use(session({
 app.use(homeRouter);
 app.use(createAccountRouter);
 app.use(loginRouter);
+/*
+    Profiles
+*/
 app.use(artistsHomeRouter);
+app.use(patronsHomeRouter);
+
+app.use(artworkRouter);
+app.use(artworkPublicPage);
+
 
 app.listen(3000, ()=>{
     console.log('listening on port 3000');
