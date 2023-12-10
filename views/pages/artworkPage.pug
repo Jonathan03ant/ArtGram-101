@@ -1,6 +1,6 @@
 html
     head
-        title Public Artworks
+        title Public Artwork
         link(rel="stylesheet", href="/style.css")
     body
         include ../partials/mainHomeHeader
@@ -10,14 +10,11 @@ html
                     h2= artwork.title
                     p
                         | Artist: 
-                        if artwork.artist
-                            a(href=`/artist/${artwork.artist._id}`)= artwork.artistName
-                        else
-                            | Information not available
+                        a(href=`/public/artist/${artwork.artist._id}`)= artwork.artist.firstName + ' ' + artwork.artist.lastName
                     img(src=artwork.poster, alt=artwork.title, style="width: 100%; height: auto;")
                     p= artwork.description
                     p= `Likes: ${artwork.likes.length}`
                     p= `Reviews: ${artwork.reviews.length}`
-                    a(href=`/artwork/${artwork._id}`) View Details
+                    a(href=`/public/artist/${artwork.artist._id}`) View Details
         script(src='client.js')
         include ../partials/footer
