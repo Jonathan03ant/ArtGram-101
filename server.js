@@ -21,10 +21,13 @@ require('./models/usersModel');
 const homeRouter = require('./routers/homeRouter');
 const createAccountRouter = require('./routers/createAccountRouter');
 const loginRouter = require('./routers/loginRouter')
-const artistsHomeRouter = require('./routers/artistsHomeRouter');
-const patronsHomeRouter = require('./routers/patronsHomeRouter')
+const artistsProfileRouter = require('./routers/artistProfileRouter');
+const patronsProfileRouter = require('./routers/patronsProfileRouter')
 const artworkRouter = require('./routers/artworkRouter');
-const artworkPublicPage = require('./routers/artworkPageRouter')
+/*
+    *Public Pages
+*/
+const artworkPublicPage = require('./routers/artworkPublicPageRouter')
 
 
 /*
@@ -35,7 +38,7 @@ app.set('view engine', 'pug')
 app.set('views', path.join(__dirname, 'views', 'pages')); 
 app.use(express.static(path.join(__dirname, 'public'))); 
 app.use(express.urlencoded({ extended: true }));
-
+app.use(express.static('public'));
 /*
     *Start the connection to the database
 */
@@ -69,8 +72,8 @@ app.use(loginRouter);
 /*
     Profiles
 */
-app.use(artistsHomeRouter);
-app.use(patronsHomeRouter);
+app.use(artistsProfileRouter);
+app.use(patronsProfileRouter);
 
 app.use(artworkRouter);
 app.use(artworkPublicPage);
