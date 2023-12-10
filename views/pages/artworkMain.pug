@@ -1,0 +1,17 @@
+html
+    head
+        title Home Page
+        link(rel="stylesheet", href="/style.css")
+    body
+        include ../partials/mainHomeHeader
+        h1#artwork-header= artwork.title 
+        h2#artist-name
+        p#artwork-desc= artwork.description
+        img(src=artwork.poster, alt=artwork.title)
+        p#artwork-likes= `Likes: ${artwork.likes.length}`
+        ul
+        h3#artist-reviews Reviews 
+            each review in artwork.reviews 
+                li=review.text 
+        script(src='client.js')
+        include ../partials/footer

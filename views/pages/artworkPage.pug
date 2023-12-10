@@ -1,0 +1,23 @@
+html
+    head
+        title Public Artworks
+        link(rel="stylesheet", href="/style.css")
+    body
+        include ../partials/mainHomeHeader
+        div#artwork-container(style="display: flex; flex-wrap: wrap; justify-content: space-between;")
+            each artwork in artworks
+                div.artwork(style="flex: 0 0 calc(33.33% - 20px); margin: 10px; box-sizing: border-box;")
+                    h2= artwork.title
+                    p
+                        | Artist: 
+                        if artwork.artist
+                            a(href=`/artist/${artwork.artist._id}`)= artwork.artistName
+                        else
+                            | Information not available
+                    img(src=artwork.poster, alt=artwork.title, style="width: 100%; height: auto;")
+                    p= artwork.description
+                    p= `Likes: ${artwork.likes.length}`
+                    p= `Reviews: ${artwork.reviews.length}`
+                    a(href=`/artwork/${artwork._id}`) View Details
+        script(src='client.js')
+        include ../partials/footer

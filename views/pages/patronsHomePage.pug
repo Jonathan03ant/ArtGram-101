@@ -1,0 +1,20 @@
+html
+    head
+        title Artist Profile Page
+        link(rel="stylesheet", href="/style.css")
+    body
+        include ../partials/mainHomeHeader
+        div#top-row-buttons 
+            form(id="change-account", method="post", action="/change-account")
+            button(type="submit") Switch Account
+            form(id="search-artworks", method="get", action="/search-artworks")
+                input(type="text", name="query", placeholder="Search artworks")
+                button(type="submit") Search
+        h2#following FOLLOWING
+        ul#following-list
+            each artist in following
+                li
+                    a(href=`/artist/${artist._id}`)= artist.artistName
+        h3 Previously viewed to be added!
+        script(src='client.js')
+        include ../partials/footer
