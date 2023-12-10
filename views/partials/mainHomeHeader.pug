@@ -1,10 +1,11 @@
 div#header
-    img#logo(src="/logo.png", alt="logo")
+    a(href='/public/artwork')
+        img#logo(src="/logo.png", alt="logo")
     | 
     if accountType === 'patron'
-        a(href="/patron/home") Home
+        a(href="/patron/home") Profile
     else if accountType === 'artist'
-        a(href="/artist/home") Home
+        a(href="/artist/home") Profile
     | 
     a#notification-link(href="/notification") Notification
     |

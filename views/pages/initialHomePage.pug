@@ -1,15 +1,16 @@
 html 
     head 
         title Home Page 
-        link(rel = " stylesheet" , href = '/style.css')
+        link(rel = "stylesheet", href = '/style.css')
     body 
         include ../partials/homeHeader
-        h1#homepage Open Gallery
-        div#homecontainer
-            button
-                a(href="/login") LOGIN
-            button 
-                a(href="/createaccount") CREAT NEW ACCOUNT
-
+        div#main-container(style="display: flex; justify-content: flex-end; align-items: center; height: 100vh;")
+            div#content-container
+                h1#homepage Open Gallery
+                div#homecontainer
+                    button
+                        a(href="/login") LOGIN
+                    button 
+                        a(href="/createaccount") CREATE NEW ACCOUNT
         script(src='client.js')
         include ../partials/footer
