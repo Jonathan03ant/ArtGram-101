@@ -6,11 +6,14 @@ const User = require('../models/usersModel');
 
 router.get('/public/artwork', async (req, res, next) => {
     try {
-        const artworks = await Artwork.find({}).populate('artist').exec();
+        const artworks = await Artwork.find({}).populate('artist');
         res.render('artworkPage', { accountType:"Patron", artworks: artworks });
     } catch (err) {
         next(err);
     }
 });
+
+
+
 
 module.exports = router;
