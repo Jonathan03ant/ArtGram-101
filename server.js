@@ -25,9 +25,13 @@ const artistsProfileRouter = require('./routers/artistProfileRouter');
 const patronsProfileRouter = require('./routers/patronsProfileRouter')
 //artworks
 const artworkRouter = require('./routers/artworkRouter');
-const artworkPublicRouter = require('./routers/artworkPublicRouter')
+const artworkPublicMainRouter = require('./routers/artworkPublicMainRouter');
 //Public Pages
-const artworkPublicPage = require('./routers/artworkPublicPageRouter')
+const artworkPublicPage = require('./routers/artworkPublicPageRouter');
+//change
+const changeAccountRouter = require('./routers/changeAccountRouter');
+
+const addArtworkRouter = require('./routers/addArtworkRouter');
 
 
 /*
@@ -39,6 +43,7 @@ app.set('views', path.join(__dirname, 'views', 'pages'));
 app.use(express.static(path.join(__dirname, 'public'))); 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
+app.use(express.json());
 /*
     *Start the connection to the database
 */
@@ -76,9 +81,10 @@ app.use(artistsProfileRouter);
 app.use(patronsProfileRouter);
 
 app.use(artworkRouter);
-app.use(artworkPublicRouter)
+app.use(artworkPublicMainRouter)
 app.use(artworkPublicPage);
-
+app.use(changeAccountRouter);
+app.use(addArtworkRouter);
 
 app.listen(3000, ()=>{
     console.log('listening on port 3000');
