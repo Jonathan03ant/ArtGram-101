@@ -1,3 +1,4 @@
+<!-- Artwork Public when Logo clicked, Shows all Artworks. -->
 html
     head
         title Public Artwork
@@ -15,6 +16,6 @@ html
                     p= artwork.description
                     p= `Likes: ${artwork.likes.length}`
                     p= `Reviews: ${artwork.reviews.length}`
-                    a(href=`/public/artist/${artwork.artist._id}`) View Details
+                    a(href=`/public/artwork/${artwork._id}`) View Details
         script(src='client.js')
         include ../partials/footer

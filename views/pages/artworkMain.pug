@@ -1,3 +1,4 @@
+<!-- A single Artwork (Private), when Artists see thier own artwork -->
 html
     head
         title Home Page
@@ -6,6 +7,7 @@ html
         include ../partials/mainHomeHeader
         h1#artwork-header= artwork.title 
         h2#artist-name
+            a(href=`/public/artist/${artwork.artist._id}`)= artwork.artist.firstName + ' ' + artwork.artist.lastName
         p#artwork-desc= artwork.description
         img(src=artwork.poster, alt=artwork.title)
         p#artwork-likes= `Likes: ${artwork.likes.length}`
