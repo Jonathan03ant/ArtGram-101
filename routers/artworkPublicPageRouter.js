@@ -7,7 +7,7 @@ const User = require('../models/usersModel');
 router.get('/public/artwork', async (req, res, next) => {
     try {
         const artworks = await Artwork.find({}).populate('artist');
-        res.render('artworkPublicPage', { accountType:"Patron", artworks: artworks });
+        res.render('artworkPublicPage', {accountType: 'artist', artworks: artworks });
     } catch (err) {
         next(err);
     }

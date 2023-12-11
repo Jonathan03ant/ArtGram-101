@@ -3,6 +3,7 @@ const router = express.Router();
 const Artwork = require('../models/artworkModel');
 /*
     *When artist viewing its work
+    *ArtworkMain (Artwork Main page)
 */
 router.get('/artwork/:id', async (req, res, next) => {
     console.log(req.params.id);
@@ -17,17 +18,5 @@ router.get('/artwork/:id', async (req, res, next) => {
     }
 });
 
-/*
-    *Public
-*/
-
-router.get('/public/artwork/:id', async (req, res, next) => {
-    try {
-        const artwork = await Artwork.findById(req.params.id).populate('artist');
-        res.render('artworkDetailPage', { artwork: artwork });
-    } catch (err) {
-        next(err);
-    }
-});
 
 module.exports = router;
