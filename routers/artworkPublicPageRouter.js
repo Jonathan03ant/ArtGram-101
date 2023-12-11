@@ -6,7 +6,8 @@ const User = require('../models/usersModel');
 
 router.get('/public/artwork', async (req, res, next) => {
     try {
-        const artworks = await Artwork.find({}).populate('artist');
+        const artworks = await Artwork.find({}).populate('artist').lean();
+        console.log(artworks);
         const user = await User.findById(req.session.userId);
         let accountType;
         if (user.accountType === 'artist') {
