@@ -5,8 +5,17 @@ html
     body
         include ../partials/mainHomeHeader
         div#top-row-buttons 
-            form(id="change-account", method="post", action="/change-account")
-            button(type="submit") Switch Account
+            form(id="change-account", method="post")
+                button(type="submit") Upgrade Account
+            form(id="add-artwork", style="display: none")
+                input(type="text", name="title", placeholder="Title")
+                input(type="text", name="artistName", placeholder="Artist Name")
+                input(type="number", name="year", placeholder="Year")
+                input(type="text", name="category", placeholder="Category")
+                input(type="text", name="medium", placeholder="Medium")
+                textarea(name="description", placeholder="Description")
+                input(type="text", name="poster", placeholder="Poster URL")
+                button(type="submit") Add Artwork
             form(id="search-artworks", method="get", action="/search-artworks")
                 input(type="text", name="query", placeholder="Search artworks")
                 button(type="submit") Search
@@ -16,5 +25,5 @@ html
                 li
                     a(href=`/artist/${artist._id}`)= artist.artistName
         h3 Previously viewed to be added!
-        script(src='client.js')
+        script(src='/client.js')
         include ../partials/footer
