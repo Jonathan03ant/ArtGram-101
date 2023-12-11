@@ -23,10 +23,10 @@ const createAccountRouter = require('./routers/createAccountRouter');
 const loginRouter = require('./routers/loginRouter')
 const artistsProfileRouter = require('./routers/artistProfileRouter');
 const patronsProfileRouter = require('./routers/patronsProfileRouter')
+//artworks
 const artworkRouter = require('./routers/artworkRouter');
-/*
-    *Public Pages
-*/
+const artworkPublicRouter = require('./routers/artworkPublicRouter')
+//Public Pages
 const artworkPublicPage = require('./routers/artworkPublicPageRouter')
 
 
@@ -76,6 +76,7 @@ app.use(artistsProfileRouter);
 app.use(patronsProfileRouter);
 
 app.use(artworkRouter);
+app.use(artworkPublicRouter)
 app.use(artworkPublicPage);
 
 
