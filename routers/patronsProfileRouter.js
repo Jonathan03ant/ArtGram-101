@@ -5,7 +5,7 @@ const User = require('../models/usersModel');
 router.get("/patron/home", async (req, res, next) => {
     try {
         const user = await User.findById(req.session.userId).populate('following');
-        res.render('patronsProfilePage', { following: user.following, accountType: 'patron'});
+        res.render('patronsProfilePage', { following: user.following, accountType: 'patron', user: user, artworks: []});
     } catch (err) {
         next(err);
     }

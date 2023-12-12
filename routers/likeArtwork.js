@@ -3,6 +3,7 @@ const router = express.Router();
 const Artwork = require('../models/artworkModel');
 const Artist = require('../models/artistsModel');
 const User = require('../models/usersModel');
+const Notification = require('../models/notifModel');
 
 /*
     *Like Functionality
@@ -13,6 +14,21 @@ router.post('/like-artwork', async (req, res) => {
         if (!artwork.likes.map(id => id.toString()).includes(req.session.userId.toString())) {
             artwork.likes.push(req.session.userId);
             await artwork.save();
+
+            // Create a new notification
+            const notification = new Notification({
+                type: 'like',
+                target: artwork._id,
+                user: req.session.userId
+            });
+            await notification.save();
+
+            // Add the notification to the artist's notifications array
+            const artist = await Artist.findById(artwork.artist);
+            artist.notifications.push(notification._id);
+            await artist.save();
+
+            
             res.sendStatus(200);
         } else {
             res.status(400).json({ message: 'You have already liked this artwork.' });
