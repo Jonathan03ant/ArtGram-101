@@ -18,9 +18,9 @@ const artworkSchema = new Schema ({
     poster: {type: String, required: true},
     likes: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
     reviews: [{
-        user: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
+        user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
         review: String
-    }]
+    }],
 });
 
 const Artwork = mongoose.model('Artwork', artworkSchema);
