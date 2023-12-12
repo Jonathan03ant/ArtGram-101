@@ -1,3 +1,30 @@
+
+/*
+    *Switch Artist-->Patron
+*/
+document.addEventListener('DOMContentLoaded', function() {
+    const switchAccountButton = document.getElementById('switch-account-button');
+    console.log(switchAccountButton);
+    switchAccountButton.addEventListener('click', function(event) {
+        console.log("clicked");
+        event.preventDefault();
+        if (confirm('Are you sure you want to switch account type?')) {
+            const xhttp = new XMLHttpRequest();
+            xhttp.open('POST', '/change-account-ap');
+            xhttp.setRequestHeader('Content-Type', 'application/json');
+            xhttp.onload = function() {
+                if (xhttp.status === 200) {
+                    window.location.href = '/patron/home';
+                } else {
+                    alert('Failed to switch account type');
+                }
+            };
+            xhttp.send(JSON.stringify({ userId: this.dataset.userId }));
+        }
+    });
+});
+
+
 /*
     *part1, sending post request to create an account
 */
@@ -64,60 +91,61 @@ document.querySelector("form").addEventListener("submit", function(event) {
 });
 
 /*
-    *Switch Functionality (Artist)
+    *Switch Patron-->Artist, Patron has an artwork already
 */
 
 document.addEventListener('DOMContentLoaded', function() {
-    const form = document.querySelector('#change-account');
-    form.addEventListener('submit', function(event) {
+    const button = document.querySelector('#change-account');
+    button.addEventListener('click', function(event) {
         event.preventDefault();
         if (confirm('Are you sure you want to switch account type?')) {
             const xhttp = new XMLHttpRequest();
-            xhttp.open('POST', '/change-account');
+            xhttp.open('POST', '/change-account-pa');
+            xhttp.setRequestHeader('Content-Type', 'application/json');
             xhttp.onload = function() {
                 if (xhttp.status === 200) {
-                    const user = JSON.parse(xhttp.responseText);
-                    window.location.href = user.accountType === 'artist' ? '/artist/home' : '/patron/home';
+                    console.log("Sucess!");
+                    window.location.href = '/artist/home';
                 } else if (xhttp.status === 400) {
                     alert('You need to add an artwork before you can switch to an artist account.');
-                    document.getElementById('add-artwork').style.display = 'block';
+                    document.getElementById('addartwork').style.display = 'block';
+
+                    /*
+                        *Proceeding to add artwork
+                    */
+
+                        const submitArtworkButton = document.getElementById('submit-artwork');
+                        submitArtworkButton.addEventListener('click', function(event) {
+                            event.preventDefault();
+                                //collect
+                            const form = document.getElementById('addartwork');
+                            const formData = new FormData(form);
+                            const data = Object.fromEntries(formData);
+                                //send AJAX
+                            const xhttp = new XMLHttpRequest();
+                            xhttp.open('POST', '/change-account-paw');
+                            xhttp.setRequestHeader('Content-Type', 'application/json');
+                            xhttp.onload = function() {
+                                if (xhttp.status === 200) {
+                                    console.log("Sucess!");
+                                    window.location.href = '/artist/home';
+                                } else {
+                                    alert('Failed to add artwork');
+                                }
+                            };
+                            xhttp.send(JSON.stringify(data));
+                        });
                 } else {
                     alert('Failed to switch account type');
                 }
             };
-            xhttp.send();
+            xhttp.send(JSON.stringify({ userId: this.dataset.userId }));
         }
     });
-
-    const addArtworkForm = document.querySelector('#ad-artwork');
-    addArtworkForm.addEventListener('submit', function(event) {
-        event.preventDefault();
-        const xhttp = new XMLHttpRequest();
-        xhttp.open('POST', '/add-artwork');
-        xhttp.setRequestHeader('Content-Type', 'application/json');
-        const formData = {
-            title: addArtworkForm.elements.title.value,
-            artistName: addArtworkForm.elements.artistName.value,
-            year: addArtworkForm.elements.year.value,
-            category: addArtworkForm.elements.category.value,
-            medium: addArtworkForm.elements.medium.value,
-            description: addArtworkForm.elements.description.value,
-            poster: addArtworkForm.elements.poster.value
-        };
-        console.log(formData);
-        xhttp.onload = function() {
-            if (xhttp.status === 200) {
-                window.location.href = '/artist/home';
-            } else {
-                alert('Failed to add artwork');
-            }
-        };
-        xhttp.send(JSON.stringify(formData));
-    });
-
 });
 
 /*
+
     *Liking an artwork, POST request
 */
 document.getElementById('like-button').addEventListener('click', function() {
@@ -148,6 +176,7 @@ document.getElementById('unlike-button').addEventListener('click', function() {
         if (xhttp.status === 200) {
             const likeCountElement = document.getElementById('artwork-likes');
             likeCountElement.textContent = `Likes: ${parseInt(likeCountElement.textContent.split(' ')[1]) - 1}`;
+            location.reload();
         } else {
             alert('Failed to unlike artwork');
         }
@@ -235,3 +264,28 @@ document.querySelectorAll('.edit-review-button').forEach(button => {
         });
     });
 }); 
+
+/*
+    *Notification
+*/
+
+document.getElementById('notification-link').addEventListener('click', function(event) {
+    event.preventDefault();
+    const xhttp = new XMLHttpRequest();
+    xhttp.open('POST', '/notification');
+    xhttp.setRequestHeader('Content-Type', 'application/json');
+    xhttp.onload = function() {
+        if (xhttp.status === 200) {
+            const notifications = JSON.parse(xhttp.responseText);
+            // Display the notifications in a pop-up box
+            let notificationText = '';
+            notifications.forEach(notification => {
+                notificationText += notification.type === 'like' ? 'You have a new like on your artwork.\n' : `You have a new ${notification.type} on your artwork.\n`;
+            });
+            alert(notificationText);
+        } else {
+            alert('Failed to load notifications');
+        }
+    };
+    xhttp.send(JSON.stringify({ artistId: this.dataset.artistId }));
+});

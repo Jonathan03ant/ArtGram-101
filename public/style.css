@@ -32,7 +32,7 @@
     *Edit the box shape
     *put it in a box like structure
 */
-#top-row-buttons form {
+#top-row-buttons {
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -43,4 +43,8 @@
 
 #top-row-buttons button {
     width: 200px; /* Adjust this value as needed */
+}
+
+#public-container{
+    margin-top: 150px;
 }
