@@ -117,3 +117,63 @@ document.addEventListener('DOMContentLoaded', function() {
 
 });
 
+/*
+    *Liking an artwork, POST request
+*/
+document.getElementById('like-button').addEventListener('click', function() {
+    const artworkId = this.dataset.artworkId;
+    const xhttp = new XMLHttpRequest();
+    xhttp.open('POST', '/like-artwork');
+    xhttp.setRequestHeader('Content-Type', 'application/json');
+    xhttp.onload = function() {
+        if (xhttp.status === 200) {
+            const likeCountElement = document.getElementById('artwork-likes');
+            likeCountElement.textContent = `Likes: ${parseInt(likeCountElement.textContent.split(' ')[1]) + 1}`;
+        } else {
+            alert('Failed to like artwork');
+        }
+    };
+    xhttp.send(JSON.stringify({ artworkId: artworkId }));
+});
+
+/*
+    *Unliking an artwork, POST request
+*/
+document.getElementById('unlike-button').addEventListener('click', function() {
+    const artworkId = this.dataset.artworkId;
+    const xhttp = new XMLHttpRequest();
+    xhttp.open('POST', '/unlike-artwork');
+    xhttp.setRequestHeader('Content-Type', 'application/json');
+    xhttp.onload = function() {
+        if (xhttp.status === 200) {
+            const likeCountElement = document.getElementById('artwork-likes');
+            likeCountElement.textContent = `Likes: ${parseInt(likeCountElement.textContent.split(' ')[1]) - 1}`;
+        } else {
+            alert('Failed to unlike artwork');
+        }
+    };
+    xhttp.send(JSON.stringify({ artworkId: artworkId }));
+});
+
+/*
+    *Reviewing an artwork, POST request
+*/
+document.getElementById('review-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+    const reviewText = document.getElementById('review-text').value;
+    const artworkId = this.dataset.artworkId;
+    const xhttp = new XMLHttpRequest();
+    xhttp.open('POST', '/add-review');
+    xhttp.setRequestHeader('Content-Type', 'application/json');
+    xhttp.onload = function() {
+        if (xhttp.status === 200) {
+            const review = JSON.parse(xhttp.responseText);
+            console.log(this.responseText);
+            const reviewsElement = document.getElementById('artist-reviews');
+            reviewsElement.innerHTML += `<p>${review.review} - ${review.user.firstName}</p>`;
+        } else {
+            alert('Failed to submit review');
+        }
+    };
+    xhttp.send(JSON.stringify({ artworkId: artworkId, review: reviewText }));
+});
