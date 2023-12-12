@@ -89,7 +89,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    const addArtworkForm = document.querySelector('#add-artwork');
+    const addArtworkForm = document.querySelector('#ad-artwork');
     addArtworkForm.addEventListener('submit', function(event) {
         event.preventDefault();
         const xhttp = new XMLHttpRequest();
@@ -171,9 +171,67 @@ document.getElementById('review-form').addEventListener('submit', function(event
             console.log(this.responseText);
             const reviewsElement = document.getElementById('artist-reviews');
             reviewsElement.innerHTML += `<p>${review.review} - ${review.user.firstName}</p>`;
+            location.reload();
         } else {
             alert('Failed to submit review');
         }
     };
     xhttp.send(JSON.stringify({ artworkId: artworkId, review: reviewText }));
 });
+
+/*
+    *Deleting Review
+*/
+document.querySelectorAll('.delete-review-button').forEach(button => {
+    button.addEventListener('click', function() {
+        const reviewId = this.dataset.reviewId;
+        const artworkId = this.dataset.artworkId;
+        const xhttp = new XMLHttpRequest();
+        xhttp.open('POST', '/delete-review');
+        xhttp.setRequestHeader('Content-Type', 'application/json');
+        xhttp.onload = function() {
+            if (xhttp.status === 200) {
+                location.reload();
+                const reviewElement = document.getElementById(`review-${reviewId}`);
+                reviewElement.parentNode.removeChild(reviewElement);
+            } else {
+                alert('Failed to delete review');
+            }
+        };
+        xhttp.send(JSON.stringify({ reviewId: reviewId, artworkId: artworkId }));
+    });
+});
+
+
+/*
+    *Editing Review
+*/
+
+document.querySelectorAll('.edit-review-button').forEach(button => {
+    button.addEventListener('click', function() {
+        const reviewElement = this.parentNode.querySelector('.comment');
+        const reviewText = reviewElement.textContent;
+        reviewElement.innerHTML = `<input type="text" value="${reviewText}">`;
+        const input = reviewElement.querySelector('input');
+        input.focus();
+        input.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                const newReviewText = this.value;
+                const reviewId = button.dataset.reviewId;
+                const artworkId = button.dataset.artworkId;
+                const xhttp = new XMLHttpRequest();
+                xhttp.open('POST', '/edit-review');
+                xhttp.setRequestHeader('Content-Type', 'application/json');
+                xhttp.onload = function() {
+                    if (xhttp.status === 200) {
+                        reviewElement.textContent = newReviewText;
+                        location.reload();
+                    } else {
+                        alert('Failed to edit review');
+                    }
+                };
+                xhttp.send(JSON.stringify({ reviewId: reviewId, artworkId: artworkId, review: newReviewText }));
+            }
+        });
+    });
+}); 
