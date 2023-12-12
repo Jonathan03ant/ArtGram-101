@@ -7,15 +7,14 @@ const User = require('../models/usersModel')
     *ArtworkMain (Artwork Main page)
 */
 router.get('/artwork/:id', async (req, res, next) => {
-    console.log(req.params.id);
+    //console.log(req.params.id);
     try {
-        const artwork = await Artwork.findById(req.params.id)
-            .populate('artist')
-            .populate('reviews');
+        const artwork = await Artwork.findById(req.params.id).populate('artist').populate('reviews.user reviews.review');
         /*
             *Account type
         */
 
+        console.log(artwork.artist);
         const user = await User.findById(req.session.userId);
         let accountType;
         if (user.accountType === 'artist') {

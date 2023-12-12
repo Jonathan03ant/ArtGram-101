@@ -11,7 +11,7 @@ const User = require('../models/usersModel');
 router.get('/public/artwork/:id', async (req, res, next) => {
     try {
         const artwork = await Artwork.findById(req.params.id).populate('artist').populate('reviews.user reviews.review');
-        console.log(JSON.stringify(artwork, null, 2));
+        console.log(artwork.artist);
         /*
             *Account type
         */
