@@ -8,7 +8,8 @@ const artistSchema = new Schema({
     workshops: [{
         description: { type: String, required: true },
         enrolled: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
-    }]
+    }],
+    notifications: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Notification' }],
 });
 
 const Artist = mongoose.model("Artist", artistSchema);

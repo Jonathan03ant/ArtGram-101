@@ -15,7 +15,7 @@ const userSchema = new Schema({
     firstName: String,
     lastName: String,
     following: [{type: mongoose.Schema.Types.ObjectId, ref: 'Artist'}],
-    notifications: [String],
+    notifications: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Notification' }]
 });
 
 /*
