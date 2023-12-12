@@ -3,14 +3,15 @@ const router = express.Router();
 const User = require('../models/usersModel');
 const Artwork = require('../models/artworkModel'); 
 
+
 router.post('/change-account', async (req, res) => {
     try {
         const user = await User.findById(req.session.userId);
         if (user.accountType === 'artist') {
             user.accountType = 'patron';
-            await Artwork.updateMany({ artist: user._id }, { artist: null });
         } else if (user.accountType === 'patron') {
             const artworks = await Artwork.find({ artist: user._id });
+            console.log(artworks);
             if (artworks.length > 0) {
                 user.accountType = 'artist';
             } else {
