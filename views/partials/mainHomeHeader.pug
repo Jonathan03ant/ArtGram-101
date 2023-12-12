@@ -7,7 +7,7 @@ div#header
     else if accountType === 'artist'
         a(href="/artist/home") Profile
     | 
-    a#notification-link(href="/notification") Notification
+    a#notification-link(href="/notification", data-artist-id=artistId, data-user-id=userId) Notification
     |
     a(href="/logout") Logout
     | 
