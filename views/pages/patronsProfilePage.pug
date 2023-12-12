@@ -5,9 +5,9 @@ html
     body
         include ../partials/mainHomeHeader
         div#top-row-buttons 
-            form(id="change-account", method="post")
-                button(type="submit") Upgrade Account
-            form(id="add-artwork", style="display: none")
+            button#change-account(type="submit", data-user-id=user._id) Upgrade Account
+            form(id="addartwork", style="display: none")
+                input(type="hidden", name="userId", value=user._id)
                 input(type="text", name="title", placeholder="Title")
                 input(type="text", name="artistName", placeholder="Artist Name")
                 input(type="number", name="year", placeholder="Year")
@@ -15,10 +15,15 @@ html
                 input(type="text", name="medium", placeholder="Medium")
                 textarea(name="description", placeholder="Description")
                 input(type="text", name="poster", placeholder="Poster URL")
-                button(type="submit") Add Artwork
+                button#submit-artwork(type="submit", data-user-id=user._id) Add Artwork
             form(id="search-artworks", method="get", action="/search-artworks")
                 input(type="text", name="query", placeholder="Search artworks")
                 button(type="submit") Search
+            div(id="search-container")
+                each artwork in artworks
+                    div
+                        h2= artwork.title
+                        p= artwork.artistName
         h2#following FOLLOWING
         ul#following-list
             each artist in following
@@ -26,4 +31,5 @@ html
                     a(href=`/artist/${artist._id}`)= artist.artistName
         h3 Previously viewed to be added!
         script(src='/client.js')
+        script(src='/search.js')
         include ../partials/footer

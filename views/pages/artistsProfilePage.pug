@@ -4,21 +4,21 @@ html
         link(rel="stylesheet", href="/style.css")
     body
         include ../partials/mainHomeHeader
-        div#top-row-buttons 
-            form(id="change-account", method="post", action="/change-account")
-                button#switch-account-button(type="submit") Switch Account
+        div#artist-profile-container
+            div#top-row-buttons 
+                button#switch-account-button(type="submit", data-user-id=user._id) Switch Account
                 button(onclick="location.href='/add-workshop'") Add Workshop
                 button(onclick="location.href='/manage-artworks'") Manage Artworks
-        div#artist-home-body 
-            div#home-artwork 
-            h1#artworkTitle All Artworks
-            ul
-                each artwork in artworks 
-                    li
-                        a(href=`/artwork/${artwork._id}`)=artwork.title 
-            div#home-workshop
-            h1#artworkShop Workshops
-                each workshop in workshops 
-                    p=workshop.description 
+            div#artist-home-body 
+                div#home-artwork 
+                h1#artworkTitle All Artworks
+                ul
+                    each artwork in artworks 
+                        li
+                            a(href=`/artwork/${artwork._id}`)=artwork.title 
+                div#home-workshop
+                h1#artworkShop Workshops
+                    each workshop in workshops 
+                        p=workshop.description 
         script(src='/client.js')
         include ../partials/footer

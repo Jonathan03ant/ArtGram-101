@@ -5,29 +5,31 @@ html
         link(rel="stylesheet", href="/style.css")
     body
         include ../partials/mainHomeHeader
-        h1#artwork-header= artwork.title 
-        h2#artist-name
-            a(href=`/public/artist/${artwork.artist._id}`)= artwork.artist.firstName + ' ' + artwork.artist.lastName
-        div#artwork-info
-            p#artwork-year= `Year: ${artwork.year}`
-            p#artwork-category= `Category: ${artwork.category}`
-            p#artwork-medium= `Medium: ${artwork.medium}`
-            p#artwork-desc= artwork.description
-        div#poster-details 
-            img(src=artwork.poster, alt=artwork.title)
-            p#artwork-likes= `Likes: ${artwork.likes.length}`
-            button#like-button(data-artwork-id=artwork._id) Like
-            button#unlike-button(data-artwork-id=artwork._id) Unlike
-            h6#artist-reviews(data-artwork-id=artwork._id) Reviews 
-            form#review-form(action='/add-review' method='POST' data-artwork-id=artwork._id)
-                textarea#review-text(name='review' placeholder='Write a review...')
-                button(type='submit') Submit Review
-            ul#reviews
-                each review in artwork.reviews
-                    li
-                        h5#reviewer-name= review.user.firstName
-                        p#comment= review.review
-                        button#edit-review-button Edit
-                        button#delete-review-button Delete
+        div#public-container
+            div#artwork-public-header
+                h1#artwork-header= artwork.title 
+                h2#artist-name
+                    a(href=`/public/artist/${artwork.artist._id}`)= artwork.artistName
+            div#artwork-info
+                p#artwork-year= `Year: ${artwork.year}`
+                p#artwork-category= `Category: ${artwork.category}`
+                p#artwork-medium= `Medium: ${artwork.medium}`
+                p#artwork-desc= artwork.description
+            div#poster-details 
+                img(src=artwork.poster, alt=artwork.title)
+                p#artwork-likes= `Likes: ${artwork.likes.length}`
+                button#like-button(data-artwork-id=artwork._id) Like
+                button#unlike-button(data-artwork-id=artwork._id) Unlike
+                h6#artist-reviews(data-artwork-id=artwork._id) Reviews 
+                form#review-form(action='/add-review' method='POST' data-artwork-id=artwork._id)
+                    textarea#review-text(name='review' placeholder='Write a review...')
+                    button(type='submit') Submit Review
+                ul#reviews
+                    each review in artwork.reviews
+                        li
+                            h5#reviewer-name= review.user.firstName
+                            p.comment= review.review
+                            button.edit-review-button(data-review-id=review._id, data-artwork-id=artwork._id) Edit
+                            button.delete-review-button(data-review-id=review._id, data-artwork-id=artwork._id) Delete
         script(src='/client.js')
         include ../partials/footer
