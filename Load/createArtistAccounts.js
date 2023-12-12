@@ -34,9 +34,9 @@ async function createArtistAccounts() {
                     *Populate the Artists Schema at the same time
                 */
                 await artistUser.save();
-
                 const artist = new Artist ({ user: artistUser._id});
                 await artist.save();
+                console.log(`Artist created: ${artist}`);
             } catch (err) {
                 console.error(`Error creating user for ${artworkData.Artist}: ${err}`);
                 continue; 

@@ -16,11 +16,18 @@ html
         div#poster-details 
             img(src=artwork.poster, alt=artwork.title)
             p#artwork-likes= `Likes: ${artwork.likes.length}`
-            h3#artist-reviews Reviews 
+            button#like-button(data-artwork-id=artwork._id) Like
+            button#unlike-button(data-artwork-id=artwork._id) Unlike
+            h6#artist-reviews(data-artwork-id=artwork._id) Reviews 
+            form#review-form(action='/add-review' method='POST' data-artwork-id=artwork._id)
+                textarea#review-text(name='review' placeholder='Write a review...')
+                button(type='submit') Submit Review
             ul#reviews
                 each review in artwork.reviews
                     li
-                        h4#reviewer-name review.user.firstName
-                        p#comment review.review
-        script(src='client.js')
+                        h5#reviewer-name= review.user.firstName
+                        p#comment= review.review
+                        button#edit-review-button Edit
+                        button#delete-review-button Delete
+        script(src='/client.js')
         include ../partials/footer
