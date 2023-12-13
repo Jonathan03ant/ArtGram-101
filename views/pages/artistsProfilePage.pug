@@ -7,8 +7,22 @@ html
         div#artist-profile-container
             div#top-row-buttons 
                 button#switch-account-button(type="submit", data-user-id=user._id) Switch Account
-                button(onclick="location.href='/add-workshop'") Add Workshop
-                button(onclick="location.href='/manage-artworks'") Manage Artworks
+                button#addworkshop(type="submit", data-user-id=user._id) Add Workshop
+                form(id="addworkshop-form", style="display: none")
+                    input(type="hidden", name="userId", value=user._id)
+                    input(type="text", name="title", placeholder="Workshope Title")
+                <!-- Button Adding -->
+                button#addmore-artwork(type="submit", data-user-id=user._id) Add Artwork
+                form(id="addartworkkk", style="display: none")
+                    input(type="hidden", name="userId", value=user._id)
+                    input(type="text", name="title", placeholder="Title")
+                    input(type="text", name="artistName", placeholder="Artist Name")
+                    input(type="number", name="year", placeholder="Year")
+                    input(type="text", name="category", placeholder="Category")
+                    input(type="text", name="medium", placeholder="Medium")
+                    textarea(name="description", placeholder="Description")
+                    input(type="text", name="poster", placeholder="Poster URL")
+                    button#submit-artworkkk(type="submit", data-user-id=user._id) Add
             div#artist-home-body 
                 div#home-artwork 
                 h1#artworkTitle All Artworks
@@ -21,4 +35,5 @@ html
                     each workshop in workshops 
                         p=workshop.description 
         script(src='/client.js')
+        script(src='/add.js')
         include ../partials/footer
