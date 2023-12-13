@@ -157,6 +157,7 @@ document.getElementById('like-button').addEventListener('click', function() {
         if (xhttp.status === 200) {
             const likeCountElement = document.getElementById('artwork-likes');
             likeCountElement.textContent = `Likes: ${parseInt(likeCountElement.textContent.split(' ')[1]) + 1}`;
+            location.reload();
         } else {
             alert('Failed to like artwork');
         }
