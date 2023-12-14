@@ -1,0 +1,24 @@
+html
+    head
+        title Artist Profile Page
+        link(rel="stylesheet", href="/style.css")
+    body
+        include ../partials/mainHomeHeader
+        div.follow
+        button.follow-button(data-artist-id=artist._id, data-user-id=user._id) Follow
+        div.artist-public-page 
+            h1 #{artist.user.username}'s Page 
+            div.all-artworks 
+                h2 Artworks 
+                each artwork in artist.Artworks 
+                    a(href=`/public/artwork/${artwork._id}`)= artwork.title
+                        img(src=artwork.poster, alt=artwork.title)
+        div.workshop-list 
+            h2 Workshops
+            each workshop in artist.workshops
+                div
+                    h3= workshop.description
+                        button.enroll-button(data-workshop-id=workshop._id, data-user-id=user._id) Enroll
+        script(src='/client.js')
+        script(src='/search.js')
+        include ../partials/footer       
